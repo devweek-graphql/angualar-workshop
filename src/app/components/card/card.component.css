@@ -1,0 +1,99 @@
+.card, .card-title, .card-subtitle {
+  color: var(--font-color);
+}
+
+.card {
+  background-color: var(--element-background-color);
+  width: 250px;
+  padding: var(--default-padding);
+}
+
+.card-content {
+  /*border: 1px solid orange;*/
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-content-image {
+  /*border: 1px solid red;*/
+  position: relative;
+  display: block;
+  object-fit: scale-down;
+}
+
+.card-content-description {
+  /*border: 1px solid green;*/
+
+  position: absolute;
+  bottom: 0;
+  padding: .5em 1em;
+  width: 100%;
+  height: 10%;
+  box-shadow: 0 0 3px;
+  background-color: rgba(0 , 0, 0, 0.75);
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  animation: down .5s;
+}
+
+.card-actions {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  right: 15px;
+}
+
+.edit-icon, .remove-icon {
+  margin-left: .5em;
+  width: 20px;
+  height: 20px;
+}
+
+.card-content-description:hover {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  white-space: normal;
+  justify-content: center;
+  align-items: center;
+  white-space: normal;
+  animation: up 1s;
+}
+
+.card:hover {
+  transform: scale(1.07);
+  transition: transform 0.7s;
+}
+
+.edit-icon:hover, .remove-icon:hover {
+  transform: scale(1.1);
+  transition: .5s;
+}
+
+a:active {
+  transform: scale(0.9);
+  transition: .5s;
+}
+
+@keyframes up {
+  from{
+    height: 10%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes down {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 10%;
+  }
+}
+

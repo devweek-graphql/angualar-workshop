@@ -1,0 +1,81 @@
+.header {
+  /*border: solid 1px lime;*/
+  display: grid;
+  justify-items: left;
+  align-content: center;
+  grid-template-areas: "add search";
+  grid-template-columns: 1.75em 1fr;
+  width: 100%;
+  height: 5em;
+  padding: var(--default-padding);
+  background-color: var(--element-background-color);
+}
+
+.header-search {
+    /*border: solid 1px orange;*/
+    grid-area: search;
+    top: 10%;
+    display: flex;
+    width: 90%;
+    padding: 1em;
+}
+
+.header-add-button {
+  /*border: solid 1px red;*/
+  position: relative;
+  grid-area: add;
+  align-self: center;
+  top: 5%;
+  width: 2em;
+  background-color: transparent;
+}
+
+.search-icon {
+  /*border: solid 1px red;*/
+  position: relative;
+  top: 10%;
+  left: .75em;
+  width: 2em;
+}
+
+.header-search-input {
+  /*border: solid 1px red;*/
+  position: relative;
+  left: .5em;
+  width: 20%;
+  height: 3em;
+  border-radius: 7px;
+  color: var(--font-input-color);
+  background-color: var(--body-background-color);
+  padding: calc(var(--default-padding) - .6em);
+  animation: collapse_input 1s
+}
+
+.search-icon:hover {
+  transform: scale(1.1);
+  transition: .5s;
+}
+
+.header-search-input:hover,
+.header-search-input:focus {
+  width: 40%;
+  animation: expand_input 1s;
+}
+
+@keyframes expand_input {
+  from {
+    width: 20%;
+  }
+  to {
+    width: 40%;
+  }
+}
+
+@keyframes collapse_input {
+  from {
+    width: 40%;
+  }
+  to {
+    width: 20%;
+  }
+}

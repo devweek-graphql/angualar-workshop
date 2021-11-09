@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --body-background-color: #192229;
+  --element-background-color: #212E36;
+  --font-color: #C8CDD0;
+  --font-input-color: #969BA1;
+  --default-padding: 1.5em;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--body-background-color);
+  color: var(--font-color);
+  padding: var(--default-padding);
+}

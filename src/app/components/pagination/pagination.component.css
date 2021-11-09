@@ -1,17 +1,7 @@
-.main-component-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 3em 1em;
-  padding: 1.5em 0 1.5em 0;
-  min-height: 53.5em;
-}
-
-/*Paginator styles*/
 .component-pagination,
 ::ng-deep .mat-select-value-text,
 ::ng-deep .mat-option,
 ::ng-deep .mat-select-arrow,
-::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow,
 ::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
   color: var(--font-input-color);
 }
@@ -33,11 +23,4 @@
   width: 100%;
   justify-items: center;
   background-color: var(--element-background-color);
-}
-
-
-@media (min-height: 1500px) {
-  .main-component-cards {
-    min-height: 58em;
-  }
 }

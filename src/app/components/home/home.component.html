@@ -1,0 +1,23 @@
+<div class="main-component">
+  <app-search class="header"></app-search>
+  <section class="main-component-cards" >
+    <app-card class="cards" *ngFor="let character of characters | paginate:pageSize:pageNumber"
+      characterName={{character.characterName}}
+      characterType={{character.characterType}}
+      characterDescription={{character.characterDescription}}
+      characterAvatar={{character.characterAvatar}}
+    >
+    </app-card>
+  </section>
+
+  <mat-paginator
+    class="component-pagination"
+    [length]="characters.length"
+    [pageIndex]="pageNumber"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="handlePagination($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>
