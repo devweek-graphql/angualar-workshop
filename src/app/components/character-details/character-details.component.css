@@ -1,0 +1,113 @@
+.character-data {
+    display: grid;
+    gap: .5em;
+    grid-template-areas: "avatar avatar avatar" "basic-data first-appeareance first-appeareance" "part-of abilities friends";
+}
+
+.character-data-avatar,
+.character-data-card,
+.character-data-abilities-table {
+    position: relative;
+    background-color: var(--element-background-color);
+    color: var(--font-input-color);
+    padding: var(--default-padding);
+}
+
+.character-data-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: avatar;
+    justify-self: center;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    padding: var(--default-padding);
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.avatar-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+.character-data-input {
+    box-shadow: .12em .12em .25em var(--element-background-color);
+    padding: var(--default-padding);
+}
+
+.basic-data {
+    grid-area: basic-data;
+}
+
+.basic-data-first-appeareance {
+    grid-area: first-appeareance;
+}
+
+.character-data-friends {
+    grid-area: friends;
+}
+
+.character-data-part-of {
+    grid-area: part-of;
+    grid-template-areas: "title" "list" "button";
+}
+
+.character-data-friends-list {
+    grid-area: list;
+}
+
+.character-data-abilities {
+    grid-area: abilities;
+}
+
+.character-data-abilities-table {
+    width: 100%;
+}
+
+.character-data-card .add-row {
+    border: 1px solid orange;
+    justify-items: right;
+    align-content: flex-end;
+}
+
+.add-row {
+    border: 1px solid red;
+    position: relative;
+    display: grid;
+    height: 100%;
+    align-self: flex-start;
+}
+
+.add-row-button {
+    border: 1px solid lime !important;
+    width: 12em;
+    height: 3.5em;
+    position: relative;
+    border-radius: 2.5px;
+    padding: 1em;
+    background-color: #1192ee;
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+
+/*
+.add-row-part-of {
+    top: -8.5em;
+}
+
+.add-row-abilities {
+    top: -13.15em;
+}
+
+.add-row-friends {
+    top: -15.4em;
+} */
+
+.button:hover {
+    background-color: #1083D5;
+}

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Character } from 'src/app/app.component';
-import { HomeService } from 'src/app/components/home/service/home.service';
+import { Character } from 'src/app/interfaces/character';
+import { API_TO_USE } from 'src/app/shared/properties/properties';
+import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '../page-config';
 
 @Component({
@@ -11,7 +12,7 @@ import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } fro
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private homeService: HomeService) { }
+  constructor(private apiFetchService: ApiFetchServiceService) { }
 
   characters: Character[] = [
     /*{
@@ -191,11 +192,13 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.homeService.getData().subscribe(data => this.characters = data)
+    // this.homeService.getData().subscribe(data => this.characters = data)
+    this.apiFetchService.getCharacters(API_TO_USE).subscribe(data => { this.characters = data });
   }
 
   handlePagination(event: PageEvent) {
       this.pageNumber = event.pageIndex;
       this.pageSize = event.pageSize;
+      this.apiFetchService.getCharacters(API_TO_USE).subscribe(data => { this.characters = data });
   }
 }

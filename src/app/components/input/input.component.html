@@ -1,0 +1,12 @@
+<div class="input-form" *ngIf="mustDisableInput; else elseBlock">
+    <div class="app-input-container">
+        <input class="app-input" disabled type={{type}} name="{{name}}" class="" value={{value}} placeholder="{{placeholder}}">
+    </div>
+</div>
+<ng-template #elseBlock>
+    <div class="input-form">
+        <div class="app-input-container">
+            <input class="app-input" type={{type}} name="{{name}}" class="app-input" value={{value}} placeholder="{{placeholder}}">
+        </div>
+    </div>
+</ng-template>

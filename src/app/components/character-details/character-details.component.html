@@ -1,6 +1,83 @@
 <form class="character-data">
-  <mat-form-field class="character-data-input character-data-name" appearance="fill">
-    <mat-label>Character name</mat-label>
-    <input matInput placeholder="Name" value="">
-  </mat-form-field>
+
+    <!-- Avatar -->
+    <div id="" class="character-data-avatar">
+        <div class="img-container circle">
+            <img class="avatar-image" src="../../../assets/avatars/superman.jpg" alt="avatar" style="transition: opacity 0.3s ease 0s; opacity: 1; visibility: visible;">
+        </div>
+    </div>
+
+    <mat-card class="character-data-card basic-data mat-elevation-z8">
+        <section class="basic-data-section">
+            <mat-card-title class="card-title basic-data-first-appeareance-title">Basic Data</mat-card-title>
+            <!-- Name -->
+            <app-input value="Algo" placeholder="Name"></app-input>
+            <app-select [values]="universes" disabled="true"></app-select>
+            <app-select [values]="characterTypes" disabled="false"></app-select>
+        </section>
+    </mat-card>
+    <!-- First appeareance data -->
+    <mat-card class="character-data-card basic-data-first-appeareance mat-elevation-z8">
+        <section class="basic-data-first-appeareance_section">
+            <mat-card-title class="card-title basic-data-first-appeareance-title">First Appeareance</mat-card-title>
+            <app-input value="" placeholder="Id"></app-input>
+            <app-input value="" placeholder="Comic Name"></app-input>
+            <app-input value="" type="date"></app-input>
+        </section>
+    </mat-card>
+
+    <!-- Friends -->
+    <mat-card class="character-data-card character-data-friends mat-elevation-z8">
+        <mat-card-title class="card-title character-data-friends-title">Friends</mat-card-title>
+        <mat-list class="character-data-friends-list">
+            <mat-list-item class="character-data-friends-list-item" *ngFor="let friend of characterFriends">
+                <app-input value={{friend.name}} placeholder="Friend's Name" disabled="false"></app-input>
+            </mat-list-item>
+        </mat-list>
+
+        <div class="add-row add-row-friends">
+            <button class="add-row-button" mat-button (click)="onAddRow($event)">Add new friend</button>
+        </div>
+    </mat-card>
+
+    <!-- Part of -->
+    <mat-card class="character-data-card character-data-part-of mat-elevation-z8">
+        <mat-card-title class="card-title part-of-title">Part of</mat-card-title>
+        <mat-list class="part-of-list">
+            <mat-list-item class="part-of-listitem" *ngFor="let characterTeam of characterTeams">
+                <app-input value={{characterTeam.name}} disabled="false"></app-input>
+            </mat-list-item>
+        </mat-list>
+
+        <div class="add-row add-row-part-of">
+            <button class="add-row-button" mat-button (click)="onAddRow($event)">Add new team</button>
+        </div>
+    </mat-card>
+
+    <!--Abilities -->
+    <mat-card class="character-data-card character-data-abilities mat-elevation-z8">
+        <mat-card-title class="card-title">Abilities</mat-card-title>
+        <table mat-table [dataSource]="dataSource" class="character-data-abilities-table">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Ability </th>
+                <td mat-cell *matCellDef="let element">
+                    <app-input value={{element.name}} placeholder="Ability Name" disabled="false"></app-input>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let element">
+                    <app-input value={{element.description}} placeholder="Description" disabled="true"></app-input>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div class="add-row add-row-abilities">
+            <button class="add-row-button" mat-button (click)="onAddRow($event)">Add new ability</button>
+        </div>
+    </mat-card>
+
 </form>

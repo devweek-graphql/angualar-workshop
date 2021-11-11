@@ -6,7 +6,9 @@
   min-height: 53.5em;
 }
 
+
 /*Paginator styles*/
+
 .component-pagination,
 ::ng-deep .mat-select-value-text,
 ::ng-deep .mat-option,
@@ -20,8 +22,9 @@
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
   background-color: var(--font-input-color);
 }
+
 ::ng-deep .mat-option.mat-active,
-::ng-deep .mat-select-panel{
+::ng-deep .mat-select-panel {
   background-color: var(--body-background-color);
 }
 
@@ -34,7 +37,6 @@
   justify-items: center;
   background-color: var(--element-background-color);
 }
-
 
 @media (min-height: 1500px) {
   .main-component-cards {

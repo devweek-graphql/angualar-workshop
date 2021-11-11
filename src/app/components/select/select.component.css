@@ -1,0 +1,21 @@
+.app-select,
+select:disabled {
+    position: relative;
+    color: var(--font-color);
+    outline: none;
+    border: none;
+    padding: 1em;
+    background-color: var(--input-background-color);
+    border-radius: 5px;
+    width: 20em;
+    box-shadow: 1px 1px 1px var(--element-background-color);
+}
+
+.app-select-container {
+    display: inline-block;
+    padding: 1em;
+}
+
+select:disabled {
+    background-color: #2A3B47;
+}

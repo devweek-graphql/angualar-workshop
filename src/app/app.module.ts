@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatPaginatorModule  } from '@angular/material/paginator'
+import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatCardModule } from '@angular/material/card'
-import { MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatSelectModule } from '@angular/material/select'
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,12 @@ import { CharacterDetailsComponent } from './components/character-details/charac
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
 import { HomeComponent } from './components/home/home.component';
+import { InputComponent } from './components/input/input.component';
+import { SelectComponent } from './components/select/select.component';
+
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
   declarations: [
@@ -25,6 +33,8 @@ import { HomeComponent } from './components/home/home.component';
     PaginationComponent,
     PaginatePipe,
     HomeComponent,
+    InputComponent,
+    SelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,8 +44,24 @@ import { HomeComponent } from './components/home/home.component';
     MatCardModule,
     MatInputModule,
     HttpClientModule,
+    MatSelectModule,
+    MatListModule,
+    MatTableModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'https://rickandmortyapi.com/graphql',
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

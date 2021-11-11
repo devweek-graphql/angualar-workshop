@@ -1,0 +1,22 @@
+<!-- <mat-form-field class="app-input" appearance="outline">
+    <mat-select [disabled]="mustDisableInput">
+        <mat-option *ngFor="let data of values" [value]="data.key">
+            {{data.value}}
+        </mat-option>
+    </mat-select>
+</mat-form-field> -->
+
+<div class="app-select-container" *ngIf="mustDisableInput; else elseBlock">
+    <select class="app-select" name={{name}}>
+    <option value="">-Seleccionar-</option>
+    <option *ngFor="let data of values" [value]="data.key" value={{data.key}} selected="">{{data.value}}</option>
+  </select>
+</div>
+<ng-template #elseBlock>
+    <div class="app-select-container">
+        <select class="app-select" name={{name}} disabled>
+      <option value="">-Seleccionar-</option>
+      <option *ngFor="let data of values" [value]="data.key" value={{data.key}} selected="">{{data.value}}</option>
+    </select>
+    </div>
+</ng-template>
