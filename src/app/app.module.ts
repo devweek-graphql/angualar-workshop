@@ -8,13 +8,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select'
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SearchComponent } from './components/search/search.component';
 import { CharacterDetailsComponent } from './components/character-details/character-details.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
 import { HomeComponent } from './components/home/home.component';
 import { InputComponent } from './components/input/input.component';
@@ -30,7 +30,6 @@ import {InMemoryCache} from '@apollo/client/core';
     CardComponent,
     SearchComponent,
     CharacterDetailsComponent,
-    PaginationComponent,
     PaginatePipe,
     HomeComponent,
     InputComponent,
@@ -47,6 +46,7 @@ import {InMemoryCache} from '@apollo/client/core';
     MatSelectModule,
     MatListModule,
     MatTableModule,
+    FormsModule,
   ],
   providers: [
     {

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Character } from 'src/app/interfaces/character';
+import { Character } from 'src/app/shared/interfaces/character';
 import { API_TO_USE } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
+import { PageConfig } from 'src/app/shared/interfaces/page-config';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '../page-config';
+import { QueryResult } from 'src/app/shared/interfaces/query-result';
 
 @Component({
   selector: 'app-home',
@@ -190,15 +192,36 @@ export class HomeComponent implements OnInit {
   pagelength = this.characters.length;
   pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS;
 
+  pageConfig!: PageConfig;
 
   ngOnInit(): void {
-    // this.homeService.getData().subscribe(data => this.characters = data)
-    this.apiFetchService.getCharacters(API_TO_USE).subscribe(data => { this.characters = data });
+    this.pageConfig = {
+      pageNumber: 1,
+      pageSize: DEFAULT_PAGE_NUMBER
+    };
+
+    this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig)
+      .subscribe(data => {
+        this.characters = data.results;
+        this.pagelength = data.totalAmount;
+        console.log(data);
+        console.log(this.pagelength);
+      });
+  }
+
+  getAvatar(character: Character) {
+    return character.characterAvatar ? character.characterAvatar : './assets/avatars/default_avatar.png';
   }
 
   handlePagination(event: PageEvent) {
-      this.pageNumber = event.pageIndex;
-      this.pageSize = event.pageSize;
-      this.apiFetchService.getCharacters(API_TO_USE).subscribe(data => { this.characters = data });
+      this.pageConfig = {
+        pageNumber: event.pageIndex + 1, pageSize: event.pageSize
+      };
+      this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig).subscribe(data => { this.characters = data.results });
+  }
+
+  loadCharacters(queryResult: QueryResult<Character>) {
+    this.characters = queryResult.results;
+    this.pagelength = queryResult.totalAmount;
   }
 }

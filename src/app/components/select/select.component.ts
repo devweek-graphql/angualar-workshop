@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { KeyValue } from 'src/app/interfaces/key-value';
+import { KeyValue } from 'src/app/shared/interfaces/key-value';
 
 @Component({
   selector: 'app-select',

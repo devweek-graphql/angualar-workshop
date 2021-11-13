@@ -77,9 +77,10 @@
   transition: .5s;
 }
 
-a:active {
-  transform: scale(0.9);
-  transition: .5s;
+.card-footer-link:active {
+  box-shadow: 0 1px var(--body-background-color);
+  transform: translateY(4px);
+  transform: 1s;
 }
 
 @keyframes up {

@@ -10,11 +10,11 @@
   </div>
 
   <mat-card-footer class="card-actions">
-    <a class="card-footer-link" href="#">
-      <img src="/assets/edit-solid.svg" class="edit-icon far fa-edit" alt="edit-solid">
+    <a class="card-footer-link" href="character/{{characterName}}?editable=true">
+      <img src="/assets/edit-solid.svg" class="edit-icon far fa-edit" alt="edit-solid" (click)="onClickEdit($event)">
     </a>
-    <a class="card-footer-link" href="#">
-      <img src="/assets/trash-alt-solid.svg" class="remove-icon fas fa-trash-alt" alt="remove-solid">
+    <a class="card-footer-link">
+      <img src="/assets/trash-alt-solid.svg" class="remove-icon fas fa-trash-alt" alt="remove-solid" (click)="onClickDelete($event)">
     </a>
   </mat-card-footer>
 </mat-card>

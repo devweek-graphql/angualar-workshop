@@ -22,8 +22,15 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onClickEdit(event: Event) {
+    event.stopPropagation();
+  }
+
+  onClickDelete(event: Event) {
+    event.stopPropagation();
+  }
+
   onClickCharacter() {
-    console.log(`I'm Here`)
     this.router.navigate(['character', this.characterName]);
   }
 }
