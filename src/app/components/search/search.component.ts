@@ -1,8 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Character } from 'src/app/shared/interfaces/character';
-import { FilterCharacter } from 'src/app/shared/interfaces/filter-character';
-import { PageConfig } from 'src/app/shared/interfaces/page-config';
-import { QueryResult } from 'src/app/shared/interfaces/query-result';
+import { Character, FilterCharacter, PageConfig } from 'src/app/shared/interfaces/interfaces';
 import { API_TO_USE } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../page-config';
@@ -19,7 +16,7 @@ export class SearchComponent implements OnInit {
   constructor(private apiFetchService: ApiFetchServiceService) { }
 
   @Output()
-  queryResult = new EventEmitter<QueryResult<Character>>();
+  queryResult = new EventEmitter<Character[]>();
 
   ngOnInit(): void {
   }
@@ -33,7 +30,7 @@ export class SearchComponent implements OnInit {
       name: this.searchField
     };
 
-    this.apiFetchService.getCharacterByName(API_TO_USE, pageConfig, filters)
-    .subscribe(data => this.queryResult.emit(data));
+    this.apiFetchService.getCharactersWithFilters(API_TO_USE, pageConfig, filters)
+    .subscribe(data => this.queryResult.emit(Array.isArray(data) ? data : Array.of(data)));
   }
 }

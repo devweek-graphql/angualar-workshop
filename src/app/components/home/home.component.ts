@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Character } from 'src/app/shared/interfaces/character';
 import { API_TO_USE } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
-import { PageConfig } from 'src/app/shared/interfaces/page-config';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '../page-config';
-import { QueryResult } from 'src/app/shared/interfaces/query-result';
+import { Character, PageConfig } from 'src/app/shared/interfaces/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -16,176 +14,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private apiFetchService: ApiFetchServiceService) { }
 
-  characters: Character[] = [
-    /*{
-      characterId: '1234',
-      characterName: 'Superman 1',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 2',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 3',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 4',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 5',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 6',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 7',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 8',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 9',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 10',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 11',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 12',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 13',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 14',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 15',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 16',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 17',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 18',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 19',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 20',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 21',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 22',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 23',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 24',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 25',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 26',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 27',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },
-    {
-      characterId: '1234',
-      characterName: 'Superman 28',
-      characterType: 'Hero',
-      characterDescription: 'Superman es un superhéroe ficticio que apareció por primera vez en los cómics estadounidenses publicados por DC Comics. ​El personaje fue creado por el escritor estadounidense Jerry Siegel y el artista canadiense Joe Shuster en 1933'
-    },*/
-  ];
+  characters: Character[] = [];
 
   pageNumber = DEFAULT_PAGE_NUMBER;
   pageSize = DEFAULT_PAGE_SIZE;
@@ -202,8 +31,8 @@ export class HomeComponent implements OnInit {
 
     this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig)
       .subscribe(data => {
-        this.characters = data.results;
-        this.pagelength = data.totalAmount;
+        this.characters = data;
+        this.pagelength = data.length;
         console.log(data);
         console.log(this.pagelength);
       });
@@ -217,11 +46,11 @@ export class HomeComponent implements OnInit {
       this.pageConfig = {
         pageNumber: event.pageIndex + 1, pageSize: event.pageSize
       };
-      this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig).subscribe(data => { this.characters = data.results });
+      this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig).subscribe(data => { this.characters = Array.isArray(data) ? data : Array.of(data) });
   }
 
-  loadCharacters(queryResult: QueryResult<Character>) {
-    this.characters = queryResult.results;
-    this.pagelength = queryResult.totalAmount;
+  loadCharacters(characters: Character[]) {
+    this.characters = characters;
+    this.pagelength = characters.length;
   }
 }

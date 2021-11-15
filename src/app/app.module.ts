@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select'
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,9 +20,9 @@ import { HomeComponent } from './components/home/home.component';
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
 
-import {APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,8 @@ import {InMemoryCache} from '@apollo/client/core';
     MatListModule,
     MatTableModule,
     FormsModule,
+    ReactiveFormsModule,
+
   ],
   providers: [
     {
@@ -55,7 +57,7 @@ import {InMemoryCache} from '@apollo/client/core';
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://rickandmortyapi.com/graphql',
+            uri: 'https://localhost:7070/graphql',
           }),
         };
       },

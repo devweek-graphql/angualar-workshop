@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { PageConfig } from 'src/app/shared/interfaces/page-config';
-import { Character } from 'src/app/shared/interfaces/character';
+import { EMPTY, Observable, of } from 'rxjs';
 import { GRAPHQL_API, REST_API } from '../properties/properties';
 import { ApiFetchServiceGraphQLService } from './api-fetch-service-graphql.service';
 import { ApiFetchServiceRestService } from './api-fetch-service-rest.service';
-import { QueryResult } from '../interfaces/query-result';
-import { FilterCharacter } from '../interfaces/filter-character';
+import { FilterCharacter, PageConfig, Character } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +15,10 @@ export class ApiFetchServiceService {
   }
 
 
-  getCharacters(apiToUse: string, pageConfig: PageConfig): Observable<QueryResult<Character>> {
-    let result: Observable<QueryResult<Character>> = of({results:[], totalAmount: 0})
+  getCharacters(apiToUse: string, pageConfig: PageConfig): Observable<Character[]> {
+    let result: Observable<Character[]> = EMPTY;
     if(apiToUse === GRAPHQL_API) {
-      result = this.gqlService.getCharacters(pageConfig, {});
+      // result = this.gqlService.getCharacters(pageConfig, {});
     } else if (apiToUse === REST_API) {
       result = this.restService.getCharacters();
     } else {
@@ -30,15 +27,25 @@ export class ApiFetchServiceService {
     return result;
   }
 
-  getCharacterByName(apiToUse: string, pageConfig: PageConfig, filters: FilterCharacter): Observable<QueryResult<Character>> {
-    let result: Observable<QueryResult<Character>> = of({results:[], totalAmount: 0})
+  getCharactersWithFilters(apiToUse: string, pageConfig: PageConfig, filters: FilterCharacter): Observable<Character[]> {
+    let result: Observable<Character[]> = EMPTY;
     if(apiToUse === GRAPHQL_API) {
-      result = this.gqlService.getCharacters(pageConfig, filters);
+      // result = this.gqlService.getCharacters(pageConfig, filters);
     } else if (apiToUse === REST_API) {
-      result = this.restService.getCharacters();
+      result = this.restService.getCharactersWithFilters(pageConfig, filters);
     } else {
       throw new  Error('Error: API not defined')
     }
     return result;
+  }
+
+  deleteCharacter(apiToUse: string, name: string): void {
+    if(apiToUse === GRAPHQL_API) {
+      // result = this.gqlService.getCharacters(pageConfig, filters);
+    } else if (apiToUse === REST_API) {
+      this.restService.deleteCharacter(name);
+    } else {
+      throw new  Error('Error: API not defined')
+    }
   }
 }

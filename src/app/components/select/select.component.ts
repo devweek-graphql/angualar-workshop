@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { KeyValue } from 'src/app/shared/interfaces/key-value';
+import { KeyValue } from 'src/app/shared/interfaces/interfaces';
 
 @Component({
   selector: 'app-select',
@@ -20,6 +20,9 @@ export class SelectComponent implements OnInit {
 
   @Input()
   name: string = '';
+
+  @Input()
+  value: string = '';
 
   mustDisableInput: boolean = false;
 

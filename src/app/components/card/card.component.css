@@ -23,6 +23,8 @@
   position: relative;
   display: block;
   object-fit: scale-down;
+  width: 250px;
+  height: 300px;
 }
 
 .card-content-description {
@@ -53,6 +55,11 @@
   margin-left: .5em;
   width: 20px;
   height: 20px;
+}
+
+.edit-icon:hover,
+.remove-icon:hover {
+  cursor: pointer;
 }
 
 .card-content-description:hover {

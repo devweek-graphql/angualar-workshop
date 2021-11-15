@@ -2,12 +2,21 @@
   display: grid;
   gap: .5em;
   grid-auto-flow: dense;
-  grid-template-areas: "avatar avatar avatar" "basic-data first-appeareance first-appeareance" "part-of abilities friends";
+  grid-template-areas:
+    "avatar avatar avatar avatar"
+    "basic-data part-of part-of part-of"
+    "abilities abilities friends friends";
+}
+
+.mat-header-cell {
+  color: var(--font-input-color);
 }
 
 .character-data-avatar,
 .character-data-card,
-.character-data-abilities-table {
+.character-data-abilities-table,
+.character-data-teams-table,
+.character-data-friends-table {
   position: relative;
   background-color: var(--element-background-color);
   color: var(--font-input-color);
@@ -16,6 +25,7 @@
 
 .character-data-avatar {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   grid-area: avatar;
@@ -25,7 +35,7 @@
   height: 175px;
   padding: var(--default-padding);
   text-align: center;
-  margin-bottom: 2em;
+  margin: 3em 0 4em 0;
 }
 
 .avatar-image {
@@ -40,27 +50,25 @@
 }
 
 .basic-data {
-  border: 1px solid red;
+  display: grid;
   grid-area: basic-data;
 }
 
 .basic-data-first-appeareance {
-  border: 1px solid red;
-  grid-area: first-appeareance;
+  /* border: 1px solid red; */
+  position: relative;
+  display: inline;
 }
 
 .character-data-friends {
-  border: 1px solid red;
   grid-area: friends;
 }
 
 .character-data-part-of {
-  border: 1px solid red;
   grid-area: part-of;
 }
 
 .character-data-abilities {
-  border: 1px solid red;
   grid-area: abilities;
 }
 
@@ -76,12 +84,13 @@
   align-items: flex-start;
 }
 
-.character-data-abilities-table {
+.character-data-abilities-table,
+.character-data-teams-table {
   width: 100%;
 }
 
-.add-row {
-  border: 1px solid red;
+.add-row,
+.submit {
   position: relative;
   display: grid;
   justify-items: right;
@@ -89,8 +98,8 @@
   margin-top: 3em;
 }
 
-.add-row-button {
-  border: 1px solid lime !important;
+.add-row-button,
+.save-button {
   width: 12em;
   height: 3.5em;
   border-radius: 2.5px;
@@ -101,6 +110,14 @@
   font-weight: 600;
 }
 
-.button:hover {
+.add-row-button:active,
+.save-button:active {
+  box-shadow: 0 1px var(--body-background-color);
+  transform: translateY(4px) translateX(-1px);
+  transform: 1s;
+}
+
+.add-row-button:hover,
+.save-button:hover {
   background-color: #1083D5;
 }

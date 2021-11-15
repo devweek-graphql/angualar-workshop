@@ -1,22 +1,22 @@
     .app-input,
     input:disabled {
-        position: relative;
-        color: var(--font-color);
-        outline: none;
-        border: none;
-        padding: 1em;
-        background-color: var(--input-background-color);
-        border-radius: 5px;
-        width: 20em;
-        box-shadow: 1px 1px 1px var(--element-background-color);
+      position: relative;
+      color: var(--font-color);
+      outline: none;
+      border: none;
+      padding: 1em;
+      background-color: var(--input-background-color);
+      border-radius: 5px;
+      width: 20em;
+      box-shadow: 1px 1px 1px var(--element-background-color);
     }
-    
-    .input-form {
-        display: inline-block;
-        padding: 1em;
+
+    .app-input-container {
+      display: inline-block;
+      padding: 1em;
     }
-    
+
     input:disabled {
-        background-color: var(--element-background-color);
-        color: var(--font-color);
+      background-color: var(--element-background-color);
+      color: var(--font-color);
     }
