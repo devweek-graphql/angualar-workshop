@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "graphql-workshop-angular-app:build:production"
+              "browserTarget": "angular-workshop:build:production"
             },
             "development": {
-              "browserTarget": "graphql-workshop-angular-app:build:development"
+              "browserTarget": "angular-workshop:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "graphql-workshop-angular-app:build"
+            "browserTarget": "angular-workshop:build"
           }
         },
         "test": {
@@ -104,5 +104,5 @@
       }
     }
   },
-  "defaultProject": "graphql-workshop-angular-app"
+  "defaultProject": "angular-workshop"
 }
