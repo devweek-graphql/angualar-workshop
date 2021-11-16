@@ -24,7 +24,6 @@ export class InputComponent implements OnInit {
   constructor(private rootFormGroup: FormGroupDirective) { }
 
   ngOnInit(): void {
-    console.log(this.controlName)
     this.mustDisableInput = this.isInputDisabled();
     this.formGroup = this.rootFormGroup.control;
   }

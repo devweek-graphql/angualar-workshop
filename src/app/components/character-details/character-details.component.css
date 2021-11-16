@@ -99,7 +99,7 @@
 }
 
 .add-row-button,
-.save-button {
+.submit-button {
   width: 12em;
   height: 3.5em;
   border-radius: 2.5px;
@@ -111,13 +111,13 @@
 }
 
 .add-row-button:active,
-.save-button:active {
+.submit-button:active {
   box-shadow: 0 1px var(--body-background-color);
   transform: translateY(4px) translateX(-1px);
   transform: 1s;
 }
 
 .add-row-button:hover,
-.save-button:hover {
+.submit-button:hover {
   background-color: #1083D5;
 }

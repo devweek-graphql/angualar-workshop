@@ -42,33 +42,35 @@ export class CharacterDetailsComponent implements OnInit {
   ]
 
   characterFriends: Character[] = [];
-  characterTeams: Team[] = [];
+  characterTeams: Team[] = [{name: '', description: ''}];
 
   displayedColumnsForAbilities: string[] = ['name', 'description'];
   displayedColumnsForFriends: string[] = ['name'];
-  dataSourceAbilities: Ability[] = [];
+  dataSourceAbilities: Ability[] = [{name: '', description: ''}];
 
   displayedColumnsTeams: string[] = ['name', 'description'];
 
   createFormGroup() {
     return this.fb.group({
-      characterName: ['', [Validators.required]],
-      characterUniverse: ['', [Validators.required]],
-      characterType: ['', [Validators.required]],
-      characterFirstAppeareanceComic: [''],
-      characterFirstAppeareanceYear: [''],
-      characterTeamName: [''],
-      characterTeamDescription: [''],
-      characterAbilityName: ['', [Validators.required]],
-      characterAbilityDescription: ['', [Validators.required]],
-      characterAlliedName: [''],
+      characterName: [{value: '', disabled: !this.isEditable}, [Validators.required]],
+      characterUniverse: [{value: '', disabled: !this.isEditable}, [Validators.required]],
+      characterType: [{value: '', disabled: !this.isEditable}, [Validators.required]],
+      characterFirstAppeareanceComic: [{value: [''], disabled: !this.isEditable}],
+      characterFirstAppeareanceYear: [{value: [''], disabled: !this.isEditable}],
+      characterTeams: [''],
+      characterTeamName: [{value: [''], disabled: !this.isEditable}],
+      characterTeamDescription: [{value: [''], disabled: !this.isEditable}],
+      characterAbilities: [''],
+      characterAbilityName: [{value: [''], disabled: !this.isEditable }, [Validators.required]],
+      characterAbilityDescription: [{value: [''], disabled: !this.isEditable}, [Validators.required]],
+      characterAllies: [''],
+      characterAlliedName: [{value: [''], disabled: !this.isEditable}],
     });
   }
 
   characterDetailsForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private fetchService: ApiFetchServiceService) {
-    this.characterDetailsForm = this.createFormGroup();
   }
 
   isEditable = false;
@@ -78,6 +80,8 @@ export class CharacterDetailsComponent implements OnInit {
 
     this.isEditable = this.activatedRoute.snapshot.queryParamMap.get('editable') === 'true';
     this.characterName = this.activatedRoute.snapshot.paramMap.get('name') || '';
+
+    this.characterDetailsForm = this.createFormGroup();
 
     if (!this.characterName) {
       this.router.navigateByUrl('/home');
@@ -104,19 +108,26 @@ export class CharacterDetailsComponent implements OnInit {
         this.characterFriends = this.character.allies;
         this.characterTeams = this.character.partOf;
 
-        this.characterDetailsForm.get('characterName')?.setValue(this.character.name);
-        this.characterDetailsForm.get('characterUniverse')?.setValue(this.character.universe);
-        this.characterDetailsForm.get('characterType')?.setValue(this.character.type);
-        this.characterDetailsForm.get('characterFirstAppeareanceComic')?.setValue(this.character.firstAppearance.comicName);
-        this.characterDetailsForm.get('characterFirstAppeareanceYear')?.setValue(this.character.firstAppearance.year);
-        this.characterDetailsForm.get('characterTeamName')?.setValue(this.character.partOf.map(team => team.name));
-        this.characterDetailsForm.get('characterTeamDescription')?.setValue(this.character.partOf.map(team => team.description));
-        this.characterDetailsForm.get('characterAbilityName')?.setValue(this.character.abilities.map(ability => ability.name));
-        this.characterDetailsForm.get('characterAbilityDescription')?.setValue(this.character.abilities.map(ability => ability.description));
-        this.characterDetailsForm.get('characterAlliedName')?.setValue(this.character.allies.map(allied => allied.name));
+        this.loadFormData();
 
         console.log(this.characterDetailsForm.controls);
       });
+  }
+
+  private loadFormData () {
+
+    const {name, type, universe, firstAppearance, abilities, allies, partOf} = this.character;
+
+    this.characterDetailsForm.patchValue({
+      characterName: name,
+      characterUniverse: universe,
+      characterType: type,
+      characterFirstAppeareanceComic: firstAppearance.comicName,
+      characterFirstAppeareanceYear: firstAppearance.year,
+      characterTeams: partOf,
+      characterAbilities: abilities,
+      characterAllies: allies,
+    })
   }
 
   onAddRow(event: Event) {
