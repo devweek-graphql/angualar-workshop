@@ -1,5 +1,5 @@
 {
-    "name": "graphql-workshop-angular-app",
+    "name": "angular-workshop",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
