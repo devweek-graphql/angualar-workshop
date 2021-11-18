@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { FilterCharacter, PageConfig, Character } from '../interfaces/interfaces';
@@ -23,6 +23,14 @@ export class ApiFetchServiceRestService {
     this.httpClient.delete(`${CHARACTERS_REST_API_URL}/${name}`).subscribe();
   }
 
+  createCharacter(charcater: Character): Observable<Character> {
+    return this.httpClient.post<Character>(CHARACTERS_REST_API_URL, charcater);
+  }
+
+  updateCharacter(character: Character, characterNameId: string): Observable<Character> {
+    return this.httpClient.put<Character>(`${CHARACTERS_REST_API_URL}/${characterNameId}`, character);
+  }
+
 
   private buildUrlWithParameters(pageConfig: PageConfig, filters: FilterCharacter) {
     const { pageNumber, pageSize, sortBy, order } = pageConfig;
@@ -44,4 +52,5 @@ export class ApiFetchServiceRestService {
 
     return `${CHARACTERS_REST_API_URL}/${uri}`;
   }
+
 }

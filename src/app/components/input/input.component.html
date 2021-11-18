@@ -1,7 +1,5 @@
-<div class="input-form" [formGroup]="formGroup">
+<div class="input-form">
   <div class="app-input-container">
-    <!-- <input [disabled]="mustDisableInput" class="app-input" type={{type}} name="{{name}}" value={{value}} -->
-    <input class="app-input" type={{type}} name="{{name}}" value={{value}} placeholder="{{placeholder}}"
-      formControlName={{controlName}}>
+    <input class="app-input" value={{value}} type={{type}} name="{{name}}" [disabled]="mustDisableInput" placeholder="{{placeholder}}">
   </div>
 </div>

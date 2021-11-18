@@ -9,7 +9,6 @@ import { FilterCharacter, PageConfig, Character } from '../interfaces/interfaces
   providedIn: 'root'
 })
 export class ApiFetchServiceService {
-
   constructor(private gqlService: ApiFetchServiceGraphQLService, private restService: ApiFetchServiceRestService) {
 
   }
@@ -33,6 +32,30 @@ export class ApiFetchServiceService {
       // result = this.gqlService.getCharacters(pageConfig, filters);
     } else if (apiToUse === REST_API) {
       result = this.restService.getCharactersWithFilters(pageConfig, filters);
+    } else {
+      throw new  Error('Error: API not defined')
+    }
+    return result;
+  }
+
+  createCharacter(apiToUse: string, charcater: Character): Observable<Character> {
+    let result: Observable<Character> = EMPTY;
+    if(apiToUse === GRAPHQL_API) {
+      // result = this.gqlService.getCharacters(pageConfig, filters);
+    } else if (apiToUse === REST_API) {
+      result = this.restService.createCharacter(charcater);
+    } else {
+      throw new  Error('Error: API not defined')
+    }
+    return result;
+  }
+
+  updateCharacter(apiToUse: string, character: Character, characterNameId: string) {
+    let result: Observable<Character> = EMPTY;
+    if(apiToUse === GRAPHQL_API) {
+      // result = this.gqlService.getCharacters(pageConfig, filters);
+    } else if (apiToUse === REST_API) {
+      result = this.restService.updateCharacter(character, characterNameId);
     } else {
       throw new  Error('Error: API not defined')
     }

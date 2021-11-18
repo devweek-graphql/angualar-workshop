@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { KeyValue } from 'src/app/shared/interfaces/interfaces';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css']
+  styleUrls: ['./select.component.css'],
 })
 export class SelectComponent implements OnInit {
 
@@ -15,14 +15,9 @@ export class SelectComponent implements OnInit {
     key: -1, value: 'No Data'
   }]
 
-  @Input()
-  disabled: string = 'false';
-
-  @Input()
-  name: string = '';
-
-  @Input()
-  value: string = '';
+  @Input() disabled: string = 'false';
+  @Input() name: string = '';
+  @Input() value: string = '';
 
   mustDisableInput: boolean = false;
 

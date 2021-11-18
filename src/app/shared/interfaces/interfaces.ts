@@ -6,11 +6,11 @@ export interface Character {
   characterAvatar: string;
   universe: CharacterUniverseEnum;
   type: CharacterTypeEnum;
-  allies: Character[];
-  partOf: Team[];
-  firstAppearance: FirstAppearance;
-  abilities: Ability[]
-  characterDescription: string;
+  allies?: Character[];
+  partOf?: Team[];
+  firstAppearance?: FirstAppearance;
+  abilities?: Ability[]
+  characterDescription?: string;
 }
 
 export interface Ability {

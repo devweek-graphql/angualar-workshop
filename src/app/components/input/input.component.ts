@@ -1,5 +1,5 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-input',
@@ -14,18 +14,14 @@ export class InputComponent implements OnInit {
   @Input() placeholder: String = '';
   @Input() type: String = '';
   @Input() disabled: string = 'false';
-  @Input() controlName: string = '';
 
-
-  formGroup!: FormGroup;
 
   mustDisableInput: boolean = false;
 
-  constructor(private rootFormGroup: FormGroupDirective) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.mustDisableInput = this.isInputDisabled();
-    this.formGroup = this.rootFormGroup.control;
   }
 
   isInputDisabled() {
