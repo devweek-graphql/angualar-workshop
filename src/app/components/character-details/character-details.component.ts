@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterTypeEnum, CharacterUniverseEnum } from 'src/app/shared/enums/enums';
-import { FilterCharacter, FirstAppearance } from 'src/app/shared/interfaces/interfaces';
-import { Ability, Character, KeyValue, PageConfig, Team } from 'src/app/shared/interfaces/interfaces';
+import { FirstAppearance, GetCharactersFilters } from 'src/app/shared/interfaces/interfaces';
+import { Ability, Character, KeyValue, Team } from 'src/app/shared/interfaces/interfaces';
 import { API_TO_USE } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
 import { DEFAULT_PAGE_SIZE } from '../page-config';
@@ -81,17 +81,8 @@ export class CharacterDetailsComponent implements OnInit {
       this.router.navigateByUrl('/home');
     }
 
-    const pageConfig: PageConfig = {
-      pageNumber: 1,
-      pageSize: DEFAULT_PAGE_SIZE
-    }
-
-    const characterFilters: FilterCharacter = {
-      name: this.characterNameParam,
-    }
-
     if (this.characterNameParam !== 'new') {
-      this.fetchService.getCharactersWithFilters(API_TO_USE, pageConfig, characterFilters)
+      this.fetchService.getCharacterById(API_TO_USE, this.characterNameParam)
         .subscribe(data => {
           if (!data) return;
           this.character = Array.isArray(data) ? data[0] : data;

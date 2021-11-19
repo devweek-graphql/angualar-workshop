@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { API_TO_USE } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '../page-config';
-import { Character, PageConfig } from 'src/app/shared/interfaces/interfaces';
+import { Character, GetCharactersFilters } from 'src/app/shared/interfaces/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -21,15 +21,16 @@ export class HomeComponent implements OnInit {
   pagelength = this.characters.length;
   pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS;
 
-  pageConfig!: PageConfig;
+  filters!: GetCharactersFilters;
 
   ngOnInit(): void {
-    this.pageConfig = {
-      pageNumber: 1,
-      pageSize: DEFAULT_PAGE_NUMBER
-    };
 
-    this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig)
+    this.filters = {
+      limit: DEFAULT_PAGE_SIZE,
+      offset: DEFAULT_PAGE_NUMBER,
+    }
+
+    this.apiFetchService.getCharactersWithFilters(API_TO_USE, this.filters)
       .subscribe(data => {
         this.characters = data;
         this.pagelength = data.length;
@@ -43,10 +44,10 @@ export class HomeComponent implements OnInit {
   }
 
   handlePagination(event: PageEvent) {
-      this.pageConfig = {
-        pageNumber: event.pageIndex + 1, pageSize: event.pageSize
+      this.filters = {
+        offset: event.pageIndex + 1, limit: event.pageSize
       };
-      this.apiFetchService.getCharacters(API_TO_USE, this.pageConfig).subscribe(data => { this.characters = Array.isArray(data) ? data : Array.of(data) });
+      this.apiFetchService.getCharactersWithFilters(API_TO_USE, this.filters).subscribe(data => this.characters = data);
   }
 
   loadCharacters(characters: Character[]) {

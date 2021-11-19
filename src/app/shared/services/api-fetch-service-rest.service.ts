@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { FilterCharacter, PageConfig, Character } from '../interfaces/interfaces';
+import { Observable } from 'rxjs';
+import { Character, GetCharactersFilters } from '../interfaces/interfaces';
 
 
 const CHARACTERS_REST_API_URL = 'http://localhost:7070/characters'
@@ -11,44 +11,44 @@ const CHARACTERS_REST_API_URL = 'http://localhost:7070/characters'
 export class ApiFetchServiceRestService {
   constructor(private httpClient: HttpClient) { }
 
-  getCharacters(): Observable<Character[]> {
-    return this.httpClient.get<Character[]>(CHARACTERS_REST_API_URL);
+  getCharactersWithFilters(filters?: GetCharactersFilters): Observable<Character[]> {
+    return this.httpClient.get<Character[]>(this.buildUrlWithParameters(filters));
   }
 
-  getCharactersWithFilters(pageConfig: PageConfig, filters: FilterCharacter): Observable<Character[]> {
-    return this.httpClient.get<Character[]>(this.buildUrlWithParameters(pageConfig, filters));
+  getCharacterById(characterId: string): Observable<Character> {
+    return this.httpClient.get<Character>(`${CHARACTERS_REST_API_URL}/${characterId}`);
   }
 
-  deleteCharacter(name: string): void {
-    this.httpClient.delete(`${CHARACTERS_REST_API_URL}/${name}`).subscribe();
+  deleteCharacter(characterId: string): void {
+    this.httpClient.delete(`${CHARACTERS_REST_API_URL}/${characterId}`).subscribe();
   }
 
   createCharacter(charcater: Character): Observable<Character> {
     return this.httpClient.post<Character>(CHARACTERS_REST_API_URL, charcater);
   }
 
-  updateCharacter(character: Character, characterNameId: string): Observable<Character> {
-    return this.httpClient.put<Character>(`${CHARACTERS_REST_API_URL}/${characterNameId}`, character);
+  updateCharacter(character: Character, characterId: string): Observable<Character> {
+    return this.httpClient.put<Character>(`${CHARACTERS_REST_API_URL}/${characterId}`, character);
   }
 
 
-  private buildUrlWithParameters(pageConfig: PageConfig, filters: FilterCharacter) {
-    const { pageNumber, pageSize, sortBy, order } = pageConfig;
-    const { name, universe } = filters;
-    if (name) {
-      //Since name is de ID for character, so when this come as filter It does not make sense to add the other one
-      return `${CHARACTERS_REST_API_URL}/${name}`;
-    }
+  private buildUrlWithParameters(filters?: GetCharactersFilters) {
+    const universe  = filters?.universe;
+    const order = filters?.order;
+    const sortBy = filters?.sortBy;
+    const limit = filters?.limit;
+    const offset = filters?.offset;
+    const start = filters?.start;
 
     let uri = '?';
     uri.concat(universe ? `universe=${universe}` : '');
 
-    let conjuntion = sortBy || order || pageSize || pageNumber ? '&' : '';
+    let conjuntion = sortBy || order || limit || offset || start ? '&' : '';
 
     uri.concat(sortBy ? `${conjuntion}sortBy=${sortBy}` : '');
     uri.concat(order ? `${conjuntion}order=${order}` : '');
-    uri.concat(pageSize ? `${conjuntion}limit=${pageSize}` : '');
-    uri.concat(pageNumber ? `${conjuntion}offset=${pageNumber}` : '');
+    uri.concat(limit ? `${conjuntion}limit=${limit}` : '');
+    uri.concat(offset ? `${conjuntion}offset=${offset}` : '');
 
     return `${CHARACTERS_REST_API_URL}/${uri}`;
   }

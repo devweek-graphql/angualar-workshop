@@ -1,4 +1,4 @@
-import { CharacterTypeEnum, CharacterUniverseEnum } from "../enums/enums";
+import { CharacterTypeEnum, CharacterUniverseEnum, OrderEnum } from "../enums/enums";
 
 
 export interface Character {
@@ -32,15 +32,31 @@ export interface Team {
   name: string;
   description: String;
 }
-
-export interface FilterCharacter {
-  name: string;
+export interface GetCharactersFilters {
   universe?: CharacterUniverseEnum;
+  order?: OrderEnum;
+  sortBy?: string;
+  limit?: number;
+  offset?: number;
+  start?: number;
 }
 
-export interface PageConfig {
-  pageNumber?: number;
-  pageSize?: number;
-  sortBy?: number;
-  order?: number;
+export interface UpdateCharacterPayload {
+  universe?: CharacterUniverseEnum
+  type?: CharacterTypeEnum
+  alliesIdsToAdd?: string[]
+  partOfIdsToAdd?: string[]
+  fistAppearanceId?: string
+  abilitiesIdsToAdd?: string[]
+}
+
+
+export interface AddCharacterPayload {
+  name: string;
+  type: CharacterTypeEnum;
+  universe: CharacterUniverseEnum;
+  alliesIds: string[];
+  partOfIds: string[]
+  firstAppearanceId: string
+  abilitiesIds: string[];
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Character, FilterCharacter, PageConfig } from 'src/app/shared/interfaces/interfaces';
+import { Character } from 'src/app/shared/interfaces/interfaces';
 import { API_TO_USE } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../page-config';
@@ -22,15 +22,7 @@ export class SearchComponent implements OnInit {
   }
 
   search() {
-    const pageConfig: PageConfig = {
-      pageNumber: DEFAULT_PAGE_NUMBER, pageSize: DEFAULT_PAGE_SIZE
-    };
-
-    const filters: FilterCharacter = {
-      name: this.searchField
-    };
-
-    this.apiFetchService.getCharactersWithFilters(API_TO_USE, pageConfig, filters)
+    this.apiFetchService.getCharacterById(API_TO_USE, this.searchField)
     .subscribe(data => this.queryResult.emit(Array.isArray(data) ? data : Array.of(data)));
   }
 }
