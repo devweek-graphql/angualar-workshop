@@ -54,4 +54,8 @@ export class HomeComponent implements OnInit {
     this.characters = characters;
     this.pagelength = characters.length;
   }
+
+  removeCharacterCard(characterName: string) {
+    this.characters = this.characters.filter(character => character.name !== characterName)
+  }
 }

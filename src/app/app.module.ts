@@ -57,7 +57,7 @@ import { InMemoryCache } from '@apollo/client/core';
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://localhost:7070/graphql',
+            uri: 'http://localhost:7080/graphql',
           }),
         };
       },

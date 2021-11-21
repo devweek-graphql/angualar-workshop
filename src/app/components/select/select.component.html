@@ -1,6 +1,6 @@
 <div class="app-select-container">
   <select class="app-select" name={{name}} [disabled]="mustDisableInput">
     <option value="">-Select-</option>
-    <option *ngFor="let data of values" [value]="data.key" [selected]="value === data.value">{{data.value}}</option>
+    <option *ngFor="let data of values" [value]="data.key" [selected]="value === data.key">{{data.value}}</option>
   </select>
 </div>

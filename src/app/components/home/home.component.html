@@ -3,7 +3,8 @@
   <section class="main-component-cards">
     <app-card class="cards" *ngFor="let character of characters" characterName={{character.name}}
       characterType={{character.type}} characterDescription={{character.characterDescription}}
-      characterAvatar="{{getAvatar(character)}}">
+      characterAvatar="{{getAvatar(character)}}" (characterDeleted)="removeCharacterCard($event)"
+      >
     </app-card>
   </section>
 

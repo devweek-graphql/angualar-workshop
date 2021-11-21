@@ -12,7 +12,7 @@ export class SelectComponent implements OnInit {
 
   @Input()
   values: KeyValue[] = [{
-    key: -1, value: 'No Data'
+    key: '', value: 'Select'
   }]
 
   @Input() disabled: string = 'false';

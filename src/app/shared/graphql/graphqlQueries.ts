@@ -7,44 +7,44 @@ export const QUERY_CHARACTERS = gql`
       characterAvatar
       universe
       type
-      firstAppearance {
-        comicName
-        year
-      }
-      allies {
-        name
-      }
-      partOf {
-        name
-        description
-      }
-      abilities {
-        name
-        description
-      }
     }
   }
 `;
 
 export const QUERY_CHARACTER_BY_ID = gql`
-  query($id: string) {
+  query($id: ID!) {
     getCharacterById (id: $id) {
       name
       characterAvatar
       universe
       type
+      firstAppearance {
+        comicName
+        year
+      }
+      allies {
+        name
+      }
+      partOf {
+        name
+        description
+      }
+      abilities {
+        name
+        description
+      }
     }
   }
 `;
 
-export const MUTATION_DELETE_CHARACTER = gql `
-  mutation($id: string!) {
+export const MUTATION_DELETE_CHARACTER = gql`
+  mutation($id: ID!) {
     deleteCharacter(id: $id)
   }
 `;
 
-export const MUTATION_UPDATE_CHARACTER = gql `
-  mutation($id: string!, $payload: UpdateCharacterPayload) {
+export const MUTATION_UPDATE_CHARACTER = gql`
+  mutation($id: ID!, $payload: UpdateCharacterPayload) {
     updateCharacter(id: $id, payload: $payload) {
       name
       characterAvatar
@@ -69,9 +69,9 @@ export const MUTATION_UPDATE_CHARACTER = gql `
   }
 `;
 
-export const MUTATION_CREATE_CHARACTER = gql `
-  mutation($id: string!, $payload: AddCharacterPayload) {
-    updateCharacter(id: $id, payload: $payload) {
+export const MUTATION_CREATE_CHARACTER = gql`
+  mutation($payload: AddCharacterPayload) {
+    addNewCharacter(payload: $payload) {
       name
       characterAvatar
       universe

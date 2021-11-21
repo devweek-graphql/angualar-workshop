@@ -58,7 +58,8 @@
 }
 
 .edit-icon:hover,
-.remove-icon:hover {
+.remove-icon:hover,
+.card {
   cursor: pointer;
 }
 
@@ -80,7 +81,7 @@
 
 .edit-icon:hover,
 .remove-icon:hover {
-  transform: scale(1.1);
+  transform: scale(1.4);
   transition: .5s;
 }
 

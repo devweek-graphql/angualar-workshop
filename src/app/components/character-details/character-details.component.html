@@ -1,4 +1,19 @@
 <form class="character-data">
+  <!-- controls -->
+  <div class="controls-section" >
+    <a class="save-button" [hidden]="!isEditable" (click)="onSaveForm()">
+      <img src="/assets/save-solid.svg" class="save-icon fas fa-save" alt="save">
+    </a>
+    <a class="cancel-edit-button" [hidden]="!isEditable" (click)="onCancelEdit()">
+      <img src="/assets/window-close-regular.svg" class="cancel-edit-icon fas fa-window-close" alt="close">
+    </a>
+    <!-- <a class="cancel-edit-button" [hidden]="!isEditable" (click)="onCancelEdit()">
+      <img src="/assets/window-close-solid.svg" class="cancel-edit-icon fas fa-window-close" alt="save-solid">
+    </a> -->
+    <a class="edit-button" [hidden]="isEditable" (click)="onEdit()">
+      <img src="/assets/user-edit-solid.svg" class="edit-icon fas fa-user-edit" alt="add">
+    </a>
+  </div>
 
   <!-- Avatar -->
   <div id="" class="character-data-avatar">
@@ -8,6 +23,7 @@
     </div>
   </div>
 
+  <!-- Basic Data -->
   <mat-card class="character-data-card basic-data mat-elevation-z8">
     <section class="basic-data-section">
       <mat-card-title class="card-title basic-data-first-appeareance-title">Basic Data</mat-card-title>
@@ -25,11 +41,11 @@
     <fieldset class="character-data-card basic-data-first-appeareance" name="characterFirstAppearance">
       <legend class="card-title basic-data-first-appeareance-title">First Apeareance</legend>
 
-      <app-input value={{characterFirstAppearance.comicName}} placeholder="Comic Name"
+      <app-input value={{characterFirstAppearance?.comicName}} placeholder="Comic Name"
         name="characterFirstAppearanceComicName" disabled={{!isEditable}}  [(ngModel)]="characterFirstAppearance.comicName" ngDefaultControl>
       </app-input>
 
-      <app-input value={{characterFirstAppearance.year}} placeholder="Year" name="characterFirstAppearanceYear"
+      <app-input value={{characterFirstAppearance?.year}} placeholder="Year" name="characterFirstAppearanceYear"
         disabled={{!isEditable}} [(ngModel)]="characterFirstAppearance.year" ngDefaultControl>
       </app-input>
     </fieldset>
@@ -60,8 +76,13 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumnsTeams;"></tr>
     </table>
 
-    <div class="add-row add-row-part-of">
-      <button [hidden]="!isEditable" class="add-row-button" mat-button (click)="onAddTeam($event)">Add new team</button>
+    <div class="add-remove">
+      <a class="remove-button" (click)="onRemoveTeam($event)" [hidden]="!isEditable">
+        <img src="/assets/minus-circle-solid.svg" class="remove-button-icon fas fa-minus-circle" alt="remove-solid">
+      </a>
+      <a class="add-button" (click)="onAddTeam($event)" [hidden]="!isEditable">
+        <img src="/assets/plus-circle-solid.svg" class="add-button-icon fas fa-plus-circle" alt="add-solid">
+      </a>
     </div>
   </mat-card>
 
@@ -108,9 +129,13 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumnsForAbilities;"></tr>
     </table>
 
-    <div class="add-row add-row-abilities">
-      <button [hidden]="!isEditable" class="add-row-button" mat-button (click)="onAddAbility($event)">Add new
-        ability</button>
+    <div class="add-remove">
+      <a class="remove-button" (click)="onRemoveAbility($event)" [hidden]="!isEditable">
+        <img src="/assets/minus-circle-solid.svg" class="remove-button-icon fas fa-minus-circle" alt="remove-solid">
+      </a>
+      <a class="add-button" (click)="onAddAbility($event)" [hidden]="!isEditable">
+        <img src="/assets/plus-circle-solid.svg" class="add-button-icon fas fa-plus-circle" alt="add-solid">
+      </a>
     </div>
   </mat-card>
 
@@ -131,14 +156,15 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumnsForAllies;"></tr>
     </table>
 
-    <div class="add-row add-row-friends">
-      <button [hidden]="!isEditable" class="add-row-button" mat-button (click)="onAddAllied($event)">Add new
-        friend</button>
+    <div class="add-remove">
+      <a class="remove-button" (click)="onRemoveAllied($event)" [hidden]="!isEditable">
+        <img src="/assets/minus-circle-solid.svg" class="remove-button-icon fas fa-minus-circle" alt="remove-solid">
+      </a>
+      <a class="add-button" (click)="onAddAllied($event)" [hidden]="!isEditable">
+        <img src="/assets/plus-circle-solid.svg" class="add-button-icon fas fa-plus-circle" alt="add-solid">
+      </a>
     </div>
-  </mat-card>
 
-  <div class="submit">
-    <!-- <button [hidden]="!isEditable" [disabled]="!characterDetailsForm.valid" class="submit-button" -->
-    <button [hidden]="!isEditable" class="submit-button" mat-button (click)="onSaveForm()">Save</button>
-  </div>
+
+  </mat-card>
 </form>

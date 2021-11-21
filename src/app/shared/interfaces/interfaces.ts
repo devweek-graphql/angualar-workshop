@@ -1,6 +1,18 @@
 import { CharacterTypeEnum, CharacterUniverseEnum, OrderEnum } from "../enums/enums";
 
 
+export interface CharacterResponse {
+  getCharacterById: Character
+}
+
+export interface CharactersResponse {
+  getCharacters: Character[]
+}
+
+export interface DeleteCharacterResponse {
+  deleteCharacter: string
+}
+
 export interface Character {
   name: string;
   characterAvatar: string;
@@ -24,7 +36,7 @@ export interface FirstAppearance {
 }
 
 export interface KeyValue {
-  key: number;
+  key: string;
   value: string;
 }
 
