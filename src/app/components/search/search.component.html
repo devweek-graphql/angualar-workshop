@@ -1,9 +1,9 @@
 <mat-card class="header">
-  <a class="header-add-button" href="/character/new?editable=true">
+  <a class="header-add-button" href="/character/new">
     <img src="./assets/plus-circle-solid.svg" class=" add-icon fas fa-plus-circle" alt="search-solid">
   </a>
   <div class="header-search">
-    <input class="header-search-input" name="searchField" placeholder="Search" type="text" [(ngModel)]="searchField">
+    <input class="header-search-input" (keyup.enter)="search()" name="searchField" placeholder="Search" type="text" [(ngModel)]="searchField">
     <a class="search-button" (click)="search()">
       <img src="/assets/search-solid.svg " class="search-button-icon fas fa-search " alt="search-solid">
     </a>

@@ -23,6 +23,6 @@ export class SearchComponent implements OnInit {
 
   search() {
     this.apiFetchService.getCharacterById(API_TO_USE, this.searchField)
-    .subscribe(data => this.queryResult.emit(Array.isArray(data) ? data : Array.of(data)));
+    .subscribe(data => this.queryResult.emit(Array.of(data)));
   }
 }

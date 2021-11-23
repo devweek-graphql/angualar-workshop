@@ -1,5 +1,7 @@
 import { gql } from 'apollo-angular'
 
+
+//Characters
 export const QUERY_CHARACTERS = gql`
   query($filters: GetCharactersFilters) {
     getCharacters (filters: $filters) {
@@ -7,6 +9,14 @@ export const QUERY_CHARACTERS = gql`
       characterAvatar
       universe
       type
+    }
+  }
+`;
+
+export const QUERY_ALL_CHARACTERS_IDS = gql`
+  query {
+    getCharacters {
+      name
     }
   }
 `;
@@ -95,3 +105,33 @@ export const MUTATION_CREATE_CHARACTER = gql`
   }
 `;
 
+
+//Abilities
+export const QUERY_ABILITIES = gql`
+  query {
+    getAllAbilities {
+      name
+      description
+    }
+  }
+`;
+
+//Teams
+export const QUERY_TEAMS = gql`
+  query {
+    getAllTeams {
+      name
+      description
+    }
+  }
+`;
+
+//FirstAppereances
+export const QUERY_APPEREANCES = gql`
+  query {
+    getAllFirstAppearances {
+      comicName
+      year
+    }
+  }
+`;

@@ -8,6 +8,15 @@ export interface CharacterResponse {
 export interface CharactersResponse {
   getCharacters: Character[]
 }
+export interface AbilitiesResponse {
+  getAbilities: Ability[]
+}
+export interface TeamsResponse {
+  getTeams: Team[]
+}
+export interface FirstAppereancesResponse {
+  getFirstAppereances: FirstAppereance[]
+}
 
 export interface DeleteCharacterResponse {
   deleteCharacter: string
@@ -20,19 +29,19 @@ export interface Character {
   type: CharacterTypeEnum;
   allies?: Character[];
   partOf?: Team[];
-  firstAppearance?: FirstAppearance;
+  firstAppearance?: FirstAppereance;
   abilities?: Ability[]
   characterDescription?: string;
 }
 
 export interface Ability {
   name: string;
-  description: String;
+  description: string;
 }
 
-export interface FirstAppearance {
+export interface FirstAppereance {
   comicName: string;
-  year: String;
+  year: string;
 }
 
 export interface KeyValue {

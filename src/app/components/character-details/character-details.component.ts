@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterTypeEnum, CharacterUniverseEnum } from 'src/app/shared/enums/enums';
-import { AddCharacterPayload, FirstAppearance, GetCharactersFilters, UpdateCharacterPayload } from 'src/app/shared/interfaces/interfaces';
+import { AddCharacterPayload, FirstAppereance, UpdateCharacterPayload } from 'src/app/shared/interfaces/interfaces';
 import { Ability, Character, KeyValue, Team } from 'src/app/shared/interfaces/interfaces';
-import { API_TO_USE } from 'src/app/shared/properties/properties';
+import { API_TO_USE, GRAPHQL_API, REST_API } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
 @Component({
   selector: 'app-character-details',
@@ -16,28 +16,35 @@ export class CharacterDetailsComponent implements OnInit {
   universes: KeyValue[] = [
     {
       key: CharacterUniverseEnum.MARVEL,
-      value: 'Marvel',
+      value: CharacterUniverseEnum.MARVEL,
     },
     {
       key: CharacterUniverseEnum.DC,
-      value: 'DC',
+      value: CharacterUniverseEnum.DC,
     }
   ]
 
   characterTypes: KeyValue[] = [
     {
       key: CharacterTypeEnum.HERO,
-      value: 'Hero',
+      value: CharacterTypeEnum.HERO,
     },
     {
       key: CharacterTypeEnum.VILLAIN,
-      value: 'Villain',
+      value: CharacterTypeEnum.VILLAIN,
     },
     {
       key: CharacterTypeEnum.ANTIHERO,
-      value: 'Antihero',
+      value: CharacterTypeEnum.ANTIHERO,
     },
   ]
+
+  allTeams: Team[] = []
+  allAbilities: Ability[] = []
+  allFirstAppereances: FirstAppereance[] = []
+  allAllies: string[] = []
+
+
 
   character: Character = {
     name: '',
@@ -52,7 +59,7 @@ export class CharacterDetailsComponent implements OnInit {
   characterName!: string;
   characterUniverse!: CharacterUniverseEnum;
   characterType!: CharacterTypeEnum;
-  characterFirstAppearance: FirstAppearance = { comicName: '', year: '' };
+  characterFirstAppearance: FirstAppereance = { comicName: '', year: '' };
   characterAllies: string[] = [''];
   characterTeams: Team[] = [{ name: '', description: '' }];
   characterAbilities: Ability[] = [{ name: '', description: '' }];
@@ -62,6 +69,7 @@ export class CharacterDetailsComponent implements OnInit {
   displayedColumnsForAllies: string[] = ['name'];
 
   isEditable!: boolean;
+  isCreationMode!: boolean;
   characterNameParam!: string;
 
   @ViewChild('teams') teamsTable!: MatTable<Team[]>;
@@ -69,11 +77,26 @@ export class CharacterDetailsComponent implements OnInit {
   @ViewChild('allies') alliesTable!: MatTable<String[]>;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private fetchService: ApiFetchServiceService) {
-    this.isEditable = this.activatedRoute.snapshot.queryParamMap.get('editable') === 'true';
+    this.fetchService.getAbilities(REST_API).subscribe(data => {
+      this.allAbilities = data;
+    });
+    this.fetchService.getTeams(REST_API).subscribe(data => {
+      this.allTeams = data
+    });
+    this.fetchService.getFirstAppereances(REST_API).subscribe(data => {
+      this.allFirstAppereances = data
+    });
+
+    //Este metodo solo funciona para GraphQL
+    this.fetchService.getCharactersIds().subscribe(data => {
+      this.allAllies = data
+    });
   }
 
   ngOnInit(): void {
     this.characterNameParam = this.activatedRoute.snapshot.paramMap.get('name') || '';
+    this.isCreationMode = this.characterNameParam === 'new';
+    this.isEditable = this.activatedRoute.snapshot.queryParamMap.get('editable') === 'true' || this.isCreationMode;
 
     if (!this.characterNameParam) {
       this.router.navigateByUrl('/home');
@@ -93,10 +116,24 @@ export class CharacterDetailsComponent implements OnInit {
     this.characterName = this.character?.name || '';
     this.characterType = this.character?.type || '';
     this.characterUniverse = this.character?.universe || '';
-    this.characterFirstAppearance = this.character?.firstAppearance || { comicName: '', year: '' };
+    Object.assign(this.characterFirstAppearance, this.character?.firstAppearance || { comicName: '', year: '' });
     this.characterAbilities = this.character?.abilities || [{ name: '', description: '' }];
     this.characterAllies = this.character?.allies?.map(allied => allied.name) || [''];
     this.characterTeams = this.character?.partOf || [{ name: '', description: '' }];
+  }
+
+  onLoadDescriptionForAbility(index: number): void {
+    const abilityName = this.characterAbilities[index].name;
+    this.characterAbilities[index].description = this.allAbilities.filter(ability => ability.name === abilityName).map(filteredAbility => filteredAbility.description)[0]
+  }
+
+  onLoadDescriptionForTeam(index: number): void {
+    const teamName = this.characterTeams[index].name;
+    this.characterTeams[index].description = this.allTeams.filter(team => team.name === teamName).map(filteredTeam => filteredTeam.description)[0]
+  }
+
+  loadYearForFirstAppereance(comicName: string): void {
+    this.characterFirstAppearance.year = this.allFirstAppereances.filter(firstAppereance => firstAppereance.comicName === comicName).map(filteredfirstAppereance => filteredfirstAppereance.year)[0]
   }
 
   onAddAllied(event: Event) {
@@ -131,27 +168,37 @@ export class CharacterDetailsComponent implements OnInit {
 
   onSaveForm() {
 
-    if (this.characterNameParam === 'new') {
+    if (this.isCreationMode) {
       this.fetchService.createCharacter(API_TO_USE, this.buildCharacterCreationPayload())
         .subscribe(response => {
           if (response) {
-            this.router.navigateByUrl(`character/${response?.name}`)
+            this.router.navigateByUrl('/home');
           } else {
             throw new Error(`something happened trying to create character ${this.characterName}`)
           }
         }
         );
     } else {
-      console.log(this.buildCharacterUpdatePayload())
       this.fetchService.updateCharacter(API_TO_USE, this.character?.name, this.buildCharacterUpdatePayload()).subscribe(response => {
         if (response) {
-          this.router.navigateByUrl(`character/${response?.name}`)
+          this.router.navigateByUrl('/home');
         } else {
           throw new Error(`something happened trying to update character ${this.characterName}`)
         }
       });
     }
-    console.log(this.character);
+  }
+
+  getComoboboxValues(TeamOrAbilityArray: Team[] | Ability[]): KeyValue[] {
+    return TeamOrAbilityArray?.map(element => ({ key: element.name, value: element.name}))
+  }
+
+  getComoboboxValuesForFirstAppereance(): KeyValue[] {
+    return this.allFirstAppereances?.map(element => ({ key: element.comicName, value: element.comicName}))
+  }
+
+  getComoboboxValuesForAllies(): KeyValue[] {
+    return this.allAllies?.map(element => ({ key: element, value: element}))
   }
 
   onEdit() {
@@ -175,7 +222,6 @@ export class CharacterDetailsComponent implements OnInit {
 
     }
   }
-
 
   private buildCharacterUpdatePayload(): UpdateCharacterPayload {
 
@@ -221,16 +267,16 @@ export class CharacterDetailsComponent implements OnInit {
   }
 
   private getNewTeams(): string[] {
-    let abilitiesIds: string[]  = this.character?.abilities?.length === 0 && this.characterAbilities?.length > 0 ? this.characterAbilities.map(ability => ability.name) : [];
-    if (abilitiesIds.length > 0) {
-      return abilitiesIds;
+    let teamsIds: string[]  = this.character?.partOf?.length === 0 && this.characterTeams?.length > 0 ? this.characterTeams.map(team => team.name) : [];
+    if (teamsIds.length > 0) {
+      return teamsIds;
     }
-    abilitiesIds = this.characterTeams?.
+    teamsIds = this.characterTeams?.
       filter(characterTeam =>
         this.character?.partOf?.filter(team => team?.name !== characterTeam.name)?.length !== 0
       ).map(team => team.name)
 
-    return abilitiesIds;
+    return teamsIds;
   }
 
 

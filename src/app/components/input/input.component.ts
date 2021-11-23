@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 
 @Component({
@@ -6,7 +6,7 @@ import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit } from '@
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, OnChanges {
 
   @Input() name: String = '';
   @Input() title: String = '';
@@ -19,6 +19,9 @@ export class InputComponent implements OnInit {
   mustDisableInput: boolean = false;
 
   constructor() { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.mustDisableInput = this.isInputDisabled();
+  }
 
   ngOnInit(): void {
     this.mustDisableInput = this.isInputDisabled();

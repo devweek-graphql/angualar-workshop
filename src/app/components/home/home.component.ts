@@ -34,8 +34,6 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         this.characters = data;
         this.pagelength = data.length;
-        console.log(data);
-        console.log(this.pagelength);
       });
   }
 
@@ -50,9 +48,9 @@ export class HomeComponent implements OnInit {
       this.apiFetchService.getCharactersWithFilters(API_TO_USE, this.filters).subscribe(data => this.characters = data);
   }
 
-  loadCharacters(characters: Character[]) {
-    this.characters = characters;
-    this.pagelength = characters.length;
+  loadCharacters(charactersToLoad: Character[]) {
+      this.characters = charactersToLoad;
+      this.pagelength = charactersToLoad.length;
   }
 
   removeCharacterCard(characterName: string) {
