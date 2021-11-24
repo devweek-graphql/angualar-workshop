@@ -67,7 +67,7 @@ export interface UpdateCharacterPayload {
   type?: CharacterTypeEnum
   alliesIdsToAdd?: string[]
   partOfIdsToAdd?: string[]
-  fistAppearanceId?: string
+  firstAppearanceId?: string
   abilitiesIdsToAdd?: string[]
 }
 

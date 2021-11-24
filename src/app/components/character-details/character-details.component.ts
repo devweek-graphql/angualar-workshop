@@ -6,6 +6,8 @@ import { AddCharacterPayload, FirstAppereance, UpdateCharacterPayload } from 'sr
 import { Ability, Character, KeyValue, Team } from 'src/app/shared/interfaces/interfaces';
 import { API_TO_USE, GRAPHQL_API, REST_API } from 'src/app/shared/properties/properties';
 import { ApiFetchServiceService } from 'src/app/shared/services/api-fetch-service.service';
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-character-details',
   templateUrl: './character-details.component.html',
@@ -148,7 +150,7 @@ export class CharacterDetailsComponent implements OnInit {
 
   onAddTeam(event: Event) {
     this.characterTeams = Object.assign([], this.characterTeams)
-    this.characterTeams.push({name: '', description: ''});
+    this.characterTeams.push({ name: '', description: '' });
     this.teamsTable.renderRows();
   }
   onRemoveTeam(event: Event) {
@@ -158,7 +160,7 @@ export class CharacterDetailsComponent implements OnInit {
 
   onAddAbility(event: Event) {
     this.characterAbilities = Object.assign([], this.characterAbilities)
-    this.characterAbilities.push({name: '', description: ''});
+    this.characterAbilities.push({ name: '', description: '' });
     this.abilitiesTable.renderRows();
   }
   onRemoveAbility(event: Event) {
@@ -179,6 +181,7 @@ export class CharacterDetailsComponent implements OnInit {
         }
         );
     } else {
+      console.log(this.buildCharacterUpdatePayload());
       this.fetchService.updateCharacter(API_TO_USE, this.character?.name, this.buildCharacterUpdatePayload()).subscribe(response => {
         if (response) {
           this.router.navigateByUrl('/home');
@@ -190,15 +193,15 @@ export class CharacterDetailsComponent implements OnInit {
   }
 
   getComoboboxValues(TeamOrAbilityArray: Team[] | Ability[]): KeyValue[] {
-    return TeamOrAbilityArray?.map(element => ({ key: element.name, value: element.name}))
+    return TeamOrAbilityArray?.map(element => ({ key: element.name, value: element.name }))
   }
 
   getComoboboxValuesForFirstAppereance(): KeyValue[] {
-    return this.allFirstAppereances?.map(element => ({ key: element.comicName, value: element.comicName}))
+    return this.allFirstAppereances?.map(element => ({ key: element.comicName, value: element.comicName }))
   }
 
   getComoboboxValuesForAllies(): KeyValue[] {
-    return this.allAllies?.map(element => ({ key: element, value: element}))
+    return this.allAllies?.map(element => ({ key: element, value: element }))
   }
 
   onEdit() {
@@ -232,49 +235,40 @@ export class CharacterDetailsComponent implements OnInit {
     return {
       ...(this.characterUniverse !== this.character.universe && { universe: this.characterUniverse }),
       ...(this.characterType !== this.character.type && { type: this.characterType }),
-      ...(this.characterFirstAppearance?.comicName !== this.character?.firstAppearance?.comicName && { fistAppearanceId: this.characterFirstAppearance?.comicName }),
-      ...(newAbilities.length > 0 && { abilitiesIdsToAdd: newAbilities}),
-      ...(newAllies.length > 0 && { alliesIdsToAdd: newAllies}),
-      ...(newTeams.length > 0 && { partOfIdsToAdd: newTeams}),
+      ...(this.characterFirstAppearance?.comicName !== this.character?.firstAppearance?.comicName && { firstAppearanceId: this.characterFirstAppearance?.comicName }),
+      ...(newAbilities.length > 0 && { abilitiesIdsToAdd: newAbilities }),
+      ...(newAllies.length > 0 && { alliesIdsToAdd: newAllies }),
+      ...(newTeams.length > 0 && { partOfIdsToAdd: newTeams }),
     };
   }
 
   private getNewAbilities(): string[] {
-    let abilitiesIds: string[] = this.character?.abilities?.length === 0 && this.characterAbilities?.length > 0 ? this.characterAbilities.map(abilities => abilities.name) : [];
-    if (abilitiesIds.length > 0) {
-      return abilitiesIds;
-    }
-    abilitiesIds = this.characterAbilities?.
-      filter(characterAbility =>
-        this.character?.abilities?.filter(ability => ability?.name !== characterAbility.name)?.length !== 0
-      ).map(ability => ability.name)
+    let abilitiesIds: string[] = []
 
+    let abilitiesOnlyInCharacter = _.differenceWith(this.characterAbilities, this.character?.abilities || [], (val1, val2) => val1.name === val2.name).map(ability => ability.name);
+
+
+    abilitiesIds = _.merge(abilitiesOnlyInCharacter, this.characterAbilities.map(ability =>  ability.name))
     return abilitiesIds;
   }
 
   private getNewAllies(): string[] {
-    let alliesIds: string[] = this.character?.allies?.length === 0 && this.characterAllies?.length > 0 ? this.characterAllies : [];
-    if (alliesIds.length > 0) {
-      return alliesIds;
-    }
+    let alliesIds: string[] = [];
 
-    alliesIds = this.characterAllies?.
-      filter(characterAllied =>
-        this.character?.allies?.filter(allied => allied?.name !== characterAllied)?.length !== 0
-      )
+    let alliesOnlyInCharacter = _.differenceWith(this.characterAllies, this.character?.allies?.map(allied => allied.name) || [], (val1, val2) => val1 === val2);
 
+    alliesIds = _.merge(alliesOnlyInCharacter, this.characterAllies)
     return alliesIds;
   }
 
   private getNewTeams(): string[] {
-    let teamsIds: string[]  = this.character?.partOf?.length === 0 && this.characterTeams?.length > 0 ? this.characterTeams.map(team => team.name) : [];
-    if (teamsIds.length > 0) {
-      return teamsIds;
+    let teamsIds: string[] = _.differenceWith(this.characterTeams, this.character?.partOf || [], (val1, val2) => val1.name === val2.name).map(team => team.name);
+
+    teamsIds = _.merge(teamsIds, this.characterTeams.map(team => team.name))
+    //If there is not differences, all that is on characterTeams is sent
+    if (teamsIds.length === 0) {
+      teamsIds = this.characterTeams.map(team => team.name)
     }
-    teamsIds = this.characterTeams?.
-      filter(characterTeam =>
-        this.character?.partOf?.filter(team => team?.name !== characterTeam.name)?.length !== 0
-      ).map(team => team.name)
 
     return teamsIds;
   }
